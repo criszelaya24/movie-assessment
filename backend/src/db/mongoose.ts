@@ -7,4 +7,4 @@ mongoose.connect(process.env.MONGO_DB, {
     useFindAndModify: false,
 });
 
-module.exports = mongoose;
+export default mongoose;
