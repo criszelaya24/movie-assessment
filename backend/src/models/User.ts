@@ -44,9 +44,9 @@ const userSchema = new mongoose.Schema<IUserDocument>({
     timestamps: true,
 });
 
-userSchema.methods.generateAuthToken = async function () {
+userSchema.methods.generateAuthToken = async function ():Promise<string> {
     const user = this;
-    const token = jwt.sign({ _id: user._id.toString() }, 'taskApp');
+    const token = jwt.sign({ _id: user._id.toString() }, process.env.SECRET_WORD);
 
     user.tokens = (user.tokens as any[]).concat({ token });
     await user.save();
@@ -64,7 +64,7 @@ userSchema.methods.toJSON = function () {
     return userObject;
 };
 
-userSchema.statics.findByCredentials = async (email, password) => {
+userSchema.statics.findByCredentials = async (email, password):Promise<IUserDocument> => {
     const user = await User.findOne({ email });
 
     if (!user) {
@@ -80,7 +80,6 @@ userSchema.statics.findByCredentials = async (email, password) => {
     return user;
 };
 
-// arrow function does not work reading THIS attribute.
 userSchema.pre<IUserDocument>('save', async function(next) {
     const user = this;
 
@@ -89,6 +88,12 @@ userSchema.pre<IUserDocument>('save', async function(next) {
     }
 
     next();
+});
+
+userSchema.post<IUserDocument>('save', async function(error, _doc, next) {
+    if ([ 'MongoError' ].includes(error.name)) {
+        next(new Error(error.message));
+    }
 });
 
 const User = mongoose.model<IUserDocument, UserStaticModel>('User', userSchema);
