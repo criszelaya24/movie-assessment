@@ -1,11 +1,10 @@
 import 'reflect-metadata';
 import { Methods } from '../../Methods';
 import { MetadataKeys } from '../../MetadataKeys';
-import { RouteHandlerDescriptor } from '../../interfaces/Request';
 
 const routerBinder = (method:string) => {
     return (route:string) => {
-        return (target: any, key: string, desc: RouteHandlerDescriptor) => {
+        return (target: any, key: string) => {
             Reflect.defineMetadata(MetadataKeys.method, method, target, key);
             Reflect.defineMetadata(MetadataKeys.path, route, target, key);
         };
