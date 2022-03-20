@@ -1,4 +1,5 @@
-movie-back/package-lock.json
-movie-back/ node_modules
-movie-back/build
+backend/package-lock.json
+backend/node_modules
+backend/build
+backend/.env
 movieAssesment.code-workspace
