@@ -2,6 +2,7 @@ import express, { Response, Request } from 'express';
 import AppRouter from './AppRouter';
 import './controllers/RootController';
 import './controllers/UserController';
+import './controllers/MovieController';
 import cookieSession from 'cookie-session';
 const app = express();
 

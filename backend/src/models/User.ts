@@ -68,13 +68,13 @@ userSchema.statics.findByCredentials = async (email, password):Promise<IUserDocu
     const user = await User.findOne({ email });
 
     if (!user) {
-        throw new Error('Unable to login');
+        throw { message: 'User not found', code: 404 };
     }
 
     const isMatch = await bcryptjs.compare(password, user.password);
 
     if (!isMatch) {
-        throw new Error('Unable to login');
+        throw { message: 'Password incorrect', code: 401 };
     }
 
     return user;
