@@ -8,5 +8,6 @@
         "rootDir": "./",
         "target": "ES5",
         "allowJs": true,
+        "downlevelIteration": true
     },
 }

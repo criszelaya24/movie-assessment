@@ -28,6 +28,9 @@ const userSchema = new mongoose.Schema<IUserDocument>({
             if (value.toLowerCase().includes('password')) throw new Error('Password contains password');
         },
     },
+    favoritesMovies: {
+        type: [ Number ],
+    },
     tokens: [ {
         token: {
             type: String,
@@ -46,6 +49,15 @@ userSchema.methods.generateAuthToken = async function ():Promise<string> {
     await user.save();
 
     return token;
+};
+
+userSchema.methods.markFavoriteMovie = async function (id:number):Promise<number> {
+    const user = this;
+
+    user.favoritesMovies = [ ...new Set([ ...user.favoritesMovies, id ]) ];
+    await user.save();
+
+    return id;
 };
 
 userSchema.methods.toJSON = function () {
