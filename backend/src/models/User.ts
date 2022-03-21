@@ -2,13 +2,7 @@ import mongoose from '../db/mongoose';
 import validator from 'validator';
 import bcryptjs from 'bcryptjs';
 import { default  as jwt }  from 'jsonwebtoken';
-import { IUserDocument } from '../interfaces/DatabaseModels';
-import { Model } from 'mongoose';
-
-interface UserStaticModel extends Model<IUserDocument> {
-    // eslint-disable-next-line no-unused-vars
-    findByCredentials(email: string, password:string): IUserDocument;
-}
+import { IUserDocument, UserStaticModel } from '../interfaces/DatabaseModels';
 
 const userSchema = new mongoose.Schema<IUserDocument>({
     name: { type: String },

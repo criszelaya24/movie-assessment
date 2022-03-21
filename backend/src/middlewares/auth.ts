@@ -9,7 +9,7 @@ const verify = (token:string):Token => {
     return jwt.verify(token, process.env.SECRET_WORD) as Token;
 };
 
-const auth = async (req:RequestWithHeaders, res:Response, next:NextFunction) => {
+const auth = async (req:RequestWithHeaders, res:Response, next:NextFunction):Promise<void> => {
     try {
         const token:string = req.header('Authorization')?.replace('Bearer ', '');
 
