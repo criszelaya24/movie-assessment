@@ -3,8 +3,7 @@ import { RequestHandler } from 'express';
 import { MetadataKeys } from '../../MetadataKeys';
 
 export const use = (middleware: RequestHandler) => {
-    return (target: any, key: string, desc: PropertyDescriptor) => {
-        console.log({ desc, key, target });
+    return (target: any, key: string) => {
         const middlewares = Reflect.getMetadata(
             MetadataKeys.middleware,
             target,
