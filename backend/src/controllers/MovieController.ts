@@ -4,6 +4,7 @@ import { get } from './decorators/routes';
 import { controller } from './decorators/controller';
 import { use } from './decorators/use';
 import auth from '../middlewares/auth';
+import country from '../middlewares/country';
 import sendError from '../utils/sendError';
 import { default as MovieDbClient } from 'node-themoviedb';
 const mdb = new MovieDbClient(process.env.MOVIE_API_KEY);
@@ -15,10 +16,11 @@ export class MovieController {
 
     @get('/now-released')
     @use(auth)
+    @use(country)
     async releasedMovies (req:RequestWithHeaders, res:Response):Promise<any> {
         try {
             const page:number = Number(req?.query?.page || defaultPage);
-            const region:string = String(req?.query?.region || defaultRegion);
+            const region:string = req?.countryInfo?.code || defaultRegion;
             const nowMovies = await mdb.movie.getNowPlaying({ query: { page, region } });
 
             res.send({ data: nowMovies.data });
