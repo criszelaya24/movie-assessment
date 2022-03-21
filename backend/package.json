@@ -9,7 +9,8 @@
     "lint:fix": "yarn lint --fix",
     "start:build": "tsc -w",
     "start:server": "nodemon build/src/run.js",
-    "start": "concurrently npm:start:*"
+    "start": "concurrently npm:start:*",
+    "deploy": "git subtree push --prefix backend heroku main"
   },
   "postinstall": "tsc",
   "author": "Cristopher Palacios",
