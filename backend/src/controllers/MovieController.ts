@@ -10,6 +10,7 @@ import MovieDb from '../MovieDb';
 const movieClient = new MovieDb();
 const defaultPage:number = 1;
 const defaultRegion:string = 'US';
+const MAX_FAVORITE_MOVIE_AMOUNT = Number(process.env.MAX_FAVORITE_MOVIE_AMOUNT) || 5;
 
 @controller('/movies')
 export class MovieController {
@@ -36,7 +37,11 @@ export class MovieController {
             const { user } = req;
             const { id } = req.body;
 
-            if (!id) throw { code: 406, message: 'ID from movie is required' };
+            if (!id)
+                throw { code: 406, message: 'ID from movie is required' };
+
+            if (user.favoritesMovies.length >= MAX_FAVORITE_MOVIE_AMOUNT)
+                throw { code: 401, message: 'Maximum Favorite movies saved amount exceeded' };
 
             user.markFavoriteMovie(Number(id));
             res.send({ data: id });
@@ -47,6 +52,7 @@ export class MovieController {
 
     @get('/favorites')
     @use(auth)
+    //TODO: middleware to select specific field, paginate, among others.
     async listFavorites(req:RequestWithHeadersAndBody, res:Response):Promise<any> {
         try {
             const { user } = req;
