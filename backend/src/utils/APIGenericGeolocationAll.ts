@@ -1,5 +1,5 @@
 import fetch from 'node-fetch';
-import { Country, CountryResponse } from '../interfaces/country';
+import { Country, CountryResponse } from '../interfaces/Country';
 
 const APIGenericGeolocationAll = async (ip:string, geoLocationEndpoint:string):Promise<Country> => {
     if (!(ip && geoLocationEndpoint))
