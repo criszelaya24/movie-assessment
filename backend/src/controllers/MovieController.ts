@@ -1,6 +1,6 @@
 import { Response } from 'express';
 import { RequestWithHeadersAndBody } from '../interfaces/Request';
-import { get, post } from './decorators/routes';
+import { get, post, del } from './decorators/routes';
 import { controller } from './decorators/controller';
 import { use } from './decorators/use';
 import auth from '../middlewares/auth';
@@ -44,7 +44,7 @@ export class MovieController {
                 throw { code: 401, message: 'Maximum Favorite movies saved amount exceeded' };
 
             user.markFavoriteMovie(Number(id));
-            res.send({ data: id });
+            res.status(201).send({ data: id });
         } catch (error) {
             sendError(res, error);
         }
@@ -68,6 +68,23 @@ export class MovieController {
                     results,
                 },
             });
+        } catch (error) {
+            sendError(res, error);
+        }
+    }
+
+    @del('/favorites/:id')
+    @use(auth)
+    async deleteFavorite(req:RequestWithHeadersAndBody, res:Response):Promise<any> {
+        try {
+            console.log({ req: req.params });
+            const { user } = req;
+            const { id } = req.params;
+
+            user.favoritesMovies = user.favoritesMovies.filter(movieId => movieId !== Number(id));
+            await user.save();
+
+            res.send({ data: true });
         } catch (error) {
             sendError(res, error);
         }
