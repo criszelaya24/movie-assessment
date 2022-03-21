@@ -6,8 +6,8 @@ import { use } from './decorators/use';
 import auth from '../middlewares/auth';
 import country from '../middlewares/country';
 import sendError from '../utils/sendError';
-import { default as MovieDbClient } from 'node-themoviedb';
-const mdb = new MovieDbClient(process.env.MOVIE_API_KEY);
+import MovieDb from '../MovieDb';
+const movieClient = new MovieDb();
 const defaultPage:number = 1;
 const defaultRegion:string = 'US';
 
@@ -21,7 +21,7 @@ export class MovieController {
         try {
             const page:number = Number(req?.query?.page || defaultPage);
             const region:string = req?.countryInfo?.code || defaultRegion;
-            const nowMovies = await mdb.movie.getNowPlaying({ query: { page, region } });
+            const nowMovies = await movieClient.getNowPlaying({ page, region });
 
             res.send({ data: nowMovies.data });
         } catch (error) {
