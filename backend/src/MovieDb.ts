@@ -17,4 +17,14 @@ export default class MovieDb implements MovieDbClass {
         return nowPlaying as NowPlaying;
     }
 
+    async movieDetail(id:number) {
+        const movie = await this.movieDbClient.movie.getDetails({
+            pathParameters: {
+                movie_id: id,
+            },
+        });
+
+        return movie;
+    }
+
 }

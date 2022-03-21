@@ -17,7 +17,7 @@ export interface IUserDocument extends Document {
     email: string,
     tokens: Token[],
     password: string,
-    favoritesMovies?: Favorite[]
+    favoritesMovies?: number[]
     generateAuthToken: () => Token
     // eslint-disable-next-line no-unused-vars
     markFavoriteMovie: (id:number) => Favorite

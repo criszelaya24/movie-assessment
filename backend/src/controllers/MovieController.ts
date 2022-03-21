@@ -45,4 +45,26 @@ export class MovieController {
         }
     }
 
+    @get('/favorites')
+    @use(auth)
+    async listFavorites(req:RequestWithHeadersAndBody, res:Response):Promise<any> {
+        try {
+            const { user } = req;
+            const { favoritesMovies } = user;
+            const results = [];
+
+            for (const favoriteMovieId of favoritesMovies) {
+                results.push(await movieClient.movieDetail(favoriteMovieId));
+            }
+
+            res.send({
+                data: {
+                    results,
+                },
+            });
+        } catch (error) {
+            sendError(res, error);
+        }
+    }
+
 }
