@@ -11,6 +11,7 @@
     "start:server": "nodemon build/src/run.js",
     "start": "concurrently npm:start:*"
   },
+  "postinstall": "tsc",
   "author": "Cristopher Palacios",
   "license": "ISC",
   "dependencies": {
@@ -41,6 +42,9 @@
     "ts-node": "^10.2.1",
     "typescript": "^4.4.3",
     "validator": "^13.7.0"
+  },
+  "engines": {
+    "node": "14.x"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.10.1",
