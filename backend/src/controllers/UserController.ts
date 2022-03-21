@@ -1,5 +1,5 @@
 import { Response } from 'express';
-import { RequestWithBody, RequestWithHeaders } from '../interfaces/Request';
+import { RequestWithHeadersAndBody } from '../interfaces/Request';
 import { post, del } from './decorators/routes';
 import { controller } from './decorators/controller';
 import { use } from './decorators/use';
@@ -10,7 +10,7 @@ import sendError from '../utils/sendError';
 export class UserController {
 
     @post('/register')
-    async register(req:RequestWithBody, res:Response):Promise<any> {
+    async register(req:RequestWithHeadersAndBody, res:Response):Promise<any> {
         try {
             const user = new User(req.body);
 
@@ -24,7 +24,7 @@ export class UserController {
     }
 
     @post('/login')
-    async postLogin(req:RequestWithBody, res:Response):Promise<any> {
+    async postLogin(req:RequestWithHeadersAndBody, res:Response):Promise<any> {
         try {
             const user = await User.findByCredentials(req.body.email, req.body.password);
 
@@ -38,7 +38,7 @@ export class UserController {
 
     @del('/logout')
     @use(auth)
-    async logout(req:RequestWithHeaders, res:Response):Promise<any> {
+    async logout(req:RequestWithHeadersAndBody, res:Response):Promise<any> {
         req.user.tokens = req.user.tokens.filter((token) => {
             return token.token !== req.token;
         });

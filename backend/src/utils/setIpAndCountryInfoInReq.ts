@@ -1,7 +1,7 @@
 import { CountryAndIp, CountryInfo } from '../interfaces/Country';
-import { RequestWithHeaders } from '../interfaces/Request';
+import { RequestWithHeadersAndBody } from '../interfaces/Request';
 
-const setIpAndCountryInfoInReq = (req:RequestWithHeaders, { ipInfo, countryData }:CountryAndIp) => {
+const setIpAndCountryInfoInReq = (req:RequestWithHeadersAndBody, { ipInfo, countryData }:CountryAndIp) => {
     const countryInfo:CountryInfo = {
         code: countryData?.country.iso_code || 'unknown',
         name: countryData?.country?.names || 'unknown',

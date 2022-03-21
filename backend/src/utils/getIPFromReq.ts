@@ -1,7 +1,7 @@
 import getRealIP from './getRealIP';
-import { RequestWithHeaders } from '../interfaces/Request';
+import { RequestWithHeadersAndBody } from '../interfaces/Request';
 
-const getIPFromReq = (req:RequestWithHeaders):string|null => {
+const getIPFromReq = (req:RequestWithHeadersAndBody):string|null => {
     if (!(req && req.headers))
         throw { message: 'req param should be an object with a key headers', code: 403 };
 

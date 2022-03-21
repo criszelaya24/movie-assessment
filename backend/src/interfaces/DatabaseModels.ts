@@ -6,6 +6,10 @@ export interface Token extends Document {
     token: string
 }
 
+export interface Favorite extends Document {
+    id: number
+}
+
 export interface IUserDocument extends Document {
     _id: string,
     name: string,
@@ -13,7 +17,10 @@ export interface IUserDocument extends Document {
     email: string,
     tokens: Token[],
     password: string,
+    favoritesMovies?: Favorite[]
     generateAuthToken: () => Token
+    // eslint-disable-next-line no-unused-vars
+    markFavoriteMovie: (id:number) => Favorite
 }
 
 export interface UserStaticModel extends Model<IUserDocument> {

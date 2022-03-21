@@ -1,6 +1,6 @@
 import { default  as jwt }  from 'jsonwebtoken';
 import { Response, NextFunction } from 'express';
-import { RequestWithHeaders } from '../interfaces/Request';
+import { RequestWithHeadersAndBody } from '../interfaces/Request';
 import User from '../models/User';
 import { Token } from '../interfaces/DatabaseModels';
 import sendError from '../utils/sendError';
@@ -9,7 +9,7 @@ const verify = (token:string):Token => {
     return jwt.verify(token, process.env.SECRET_WORD) as Token;
 };
 
-const auth = async (req:RequestWithHeaders, res:Response, next:NextFunction):Promise<void> => {
+const auth = async (req:RequestWithHeadersAndBody, res:Response, next:NextFunction):Promise<void> => {
     try {
         const token:string = req.header('Authorization')?.replace('Bearer ', '');
 
