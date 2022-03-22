@@ -1,4 +1,4 @@
-import { CountryAndIp, CountryInfo } from '../interfaces/country';
+import { CountryAndIp, CountryInfo } from '../interfaces/Country';
 import { RequestWithHeadersAndBody } from '../interfaces/Request';
 
 const setIpAndCountryInfoInReq = (req:RequestWithHeadersAndBody, { ipInfo, countryData }:CountryAndIp) => {
