@@ -8,6 +8,7 @@
     "lint": "eslint ./ -f table",
     "lint:fix": "yarn lint --fix",
     "start": "node build/src/run.js",
+    "build": "tsc",
     "start:dev:build": "tsc -w",
     "start:dev:server": "nodemon build/src/run.js",
     "start:dev": "concurrently npm:start:dev:*",
@@ -50,7 +51,6 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.10.1",
     "@typescript-eslint/parser": "^5.10.2",
-    "concurrently": "^6.3.0",
-    "eslint-config-lint": "git+ssh://github.com/criszelaya24/eslint-config"
+    "concurrently": "^6.3.0"
   }
 }
