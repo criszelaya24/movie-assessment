@@ -52,6 +52,6 @@
     "@typescript-eslint/parser": "^5.10.2",
     "concurrently": "^6.3.0",
     "typescript": "^4.4.3",
-    "eslint-config-lint": "git+ssh://github.com/criszelaya24/eslint-config"
+    "eslint-config-lint": "git://github.com/criszelaya24/eslint-config"
   }
 }
