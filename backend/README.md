@@ -16,7 +16,7 @@ If you want to setup locally this server, you need the following.
 Fill out the .env.example and rename it to .env then, start the server, run from the terminal:
 
     - npm run install
-    - npm run start
+    - npm run start:dev
 
 # Postman Collection
     https://www.getpostman.com/collections/9d9fc1aeda4fe200f6c6
