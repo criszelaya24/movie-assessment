@@ -1,6 +1,6 @@
 import { Response, NextFunction } from 'express';
 import { RequestWithHeadersAndBody } from '../interfaces/Request';
-import { CountryAndIp } from '../interfaces/Country';
+import { CountryAndIp } from '../interfaces/country';
 import APIGenericGeolocationAll from '../utils/APIGenericGeolocationAll';
 import getIPFromReq from '../utils/getIPFromReq';
 import sendError from '../utils/sendError';

@@ -1,6 +1,6 @@
 import { Request, RequestHandler } from 'express';
 import { IUserDocument as User } from '../interfaces/DatabaseModels';
-import { CountryInfo } from './Country';
+import { CountryInfo } from './country';
 export interface RequestWithHeadersAndBody extends Request {
     user: User,
     token: string,
