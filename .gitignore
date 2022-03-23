@@ -3,3 +3,5 @@ backend/node_modules
 backend/build
 backend/.env
 movieAssesment.code-workspace
+/fronend/node_module
+/fronend/package-lock.json
