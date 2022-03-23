@@ -1,7 +1,8 @@
-import './App.css';
 import { auth } from './store/services/index';
 import Layout from './components/Layout/Layout';
 import { Switch, Route, Redirect } from 'react-router-dom';
+// import UserProfile from './components/Profile/UserProfile';
+// import AuthPage from './pages/AuthPage';
 import HomePage from './pages/HomePage';
 
 function App(props) {

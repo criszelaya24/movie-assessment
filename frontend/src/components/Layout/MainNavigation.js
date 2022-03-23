@@ -5,7 +5,7 @@ import classes from './MainNavigation.module.css';
 
 const MainNavigation = (props) => {
 
-  const isLoggedIn = props.isAuthenticated;
+  const { isAuthenticated } = props;
 
   const logoutHandler = () => {
     props.onLogout();
@@ -19,17 +19,17 @@ const MainNavigation = (props) => {
       </Link>
       <nav>
         <ul>
-          {!isLoggedIn && (
+          {!isAuthenticated && (
             <li>
               <Link to='/auth'>Login</Link>
             </li>
           )}
-          {isLoggedIn && (
+          {isAuthenticated && (
             <li>
               <Link to='/profile'>Profile</Link>
             </li>
           )}
-          {isLoggedIn && (
+          {isAuthenticated && (
             <li>
               <button onClick={logoutHandler}>Logout</button>
             </li>
