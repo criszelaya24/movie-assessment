@@ -4,4 +4,5 @@ backend/build
 backend/.env
 movieAssesment.code-workspace
 frontend/node_modules/
-/frontend/package-lock.json
+frontend/package-lock.json
+frontend/.env
