@@ -6,7 +6,7 @@ const initialState = {
     userId: null,
     error: null,
     /* redirecting the user to the checkout page */
-    authRedirectPath: '/'
+    authRedirectPath: ''
 };
 
 
@@ -20,7 +20,7 @@ const reducer = (state = initialState, action) => {
                 error: null,
             };
 
-        case actionsTypes.AUTH_SUCESS:
+        case actionsTypes.AUTH_SUCCESS:
             return {
                 ...state,
                 token: action.idToken,

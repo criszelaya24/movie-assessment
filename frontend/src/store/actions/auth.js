@@ -1,6 +1,7 @@
 import * as actionsTypes from './actionsTypes';
 import * as routes from '../../routes'
 import axios from '../../axios';
+const tokenDuration = Number(process.env.REACT_APP_TOKEN_DURATION) || 2880000
 
 // import axios from '../../axios-orders';
 
@@ -11,11 +12,11 @@ export const authStart = () => {
     };
 };
 
-export const authSucess = (token, userId) => {
+export const authSuccess = (token, userId) => {
     return {
-        type: actionsTypes.AUTH_SUCESS,
+        type: actionsTypes.AUTH_SUCCESS,
         idToken: token,
-        userId: userId
+        userId
     };
 
 };
@@ -42,7 +43,7 @@ export const checkAuthTimeout = (expirationTime) => {
         setTimeout(() => {
             dispatch(logout());
 
-        }, expirationTime * 1000);
+        }, expirationTime);
 
     };
 
@@ -63,13 +64,28 @@ export const auth = (authValues, isLogin) => {
         dispatch(authStart());
         const path = isLogin ? routes.auth.login : routes.auth.register
 
-        setTimeout(async () => {
-
-            // dispatch(authFail('Testing Error Modal'))
-        }, 1000)
-
-
-        // dispatch(authSucess('response.data.idToken', 'response.data.localId'));
+        axios.post(path, authValues)
+            .then(response => {
+                const expirationDate = new Date(new Date().getTime() +  tokenDuration)
+                const token = response.data.token
+                const userId = response.data.user._id
+                localStorage.setItem('token', token);
+                localStorage.setItem('expirationDate', expirationDate);
+                localStorage.setItem('userId', userId);
+                dispatch(authSuccess(token, userId));
+                // dispatch(checkAuthTimeout(tokenDuration));
+            })
+            .catch(error => {
+                const errors = [];
+                let errorData = error.response.data.error
+                if (typeof errorData === 'object') {
+                    Object.keys(errorData).forEach(error => {
+                        errors.push(`${error}: ${errorData[error]}`)
+                    })
+                    errorData = null
+                }
+                dispatch(authFail( errorData || errors.join(' / ')))
+            })
     };
 };
 
@@ -85,8 +101,8 @@ export const authCheckState = () => {
                 dispatch(logout())
             } else {
                 const userId = localStorage.getItem('userId');
-                dispatch(authSucess(token, userId));
-                dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime())/ 1000));  
+                dispatch(authSuccess(token, userId));
+                dispatch(checkAuthTimeout(expirationDate.getTime() - new Date().getTime()));  
 
             }   
         } 

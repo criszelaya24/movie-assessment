@@ -6,24 +6,31 @@ import classes from './MainNavigation.module.css';
 const MainNavigation = () => {
 
   const { authState, setAuthStateDispatches } = useAuth();
+  const onLogout = () => {
+    setAuthStateDispatches.onLogout()
+    setAuthStateDispatches.onSetAuthRedirectPath('/')
+  }
 
   const navigationItems = (
     <nav>
     <ul>
       {!authState?.isAuthenticated && (
-        <li>
-          <Link to='/auth'>Login</Link>
+        <li onClick={() => setAuthStateDispatches.onSetAuthRedirectPath('/auth')}>
+          Login
         </li>
       )}
       {authState?.isAuthenticated && (
-        <li>
-          <Link to='/profile'>Profile</Link>
-        </li>
-      )}
-      {authState?.isAuthenticated && (
-        <li>
-          <button onClick={setAuthStateDispatches.onLogout}>Logout</button>
-        </li>
+        <>
+          <li onClick={() => setAuthStateDispatches.onSetAuthRedirectPath('/favorites')}>
+            Favorites
+          </li>
+          <li onClick={() => setAuthStateDispatches.onSetAuthRedirectPath('/movies')}>
+            Movies
+          </li>
+          <li>
+            <button onClick={onLogout}>Logout</button>
+          </li>
+        </>
       )}
     </ul>
   </nav>

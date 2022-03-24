@@ -15,7 +15,7 @@ const AuthForm = () => {
 
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  const { error } = authState
+  const { error, isAuthenticated } = authState
 
   const switchAuthModeHandler = () => {
     setIsLogin((prevState) => !prevState);
@@ -25,31 +25,33 @@ const AuthForm = () => {
     event.preventDefault();
 
     // TODO: Add validation with yup (https://www.npmjs.com/package/yup)
-    let enteredFullName;
-    let enteredAge;
-    const enteredEmail = emailInputRef.current.value;
-    const enteredPassword = passwordInputRef.current.value;
+    let name;
+    let age;
+    const email = emailInputRef.current.value;
+    const password = passwordInputRef.current.value;
     if (!isLogin) {
-      enteredFullName = fullNameInputRef.current.value;
-      enteredAge = ageInputRef.current.value;
+      name = fullNameInputRef.current.value;
+      age = ageInputRef.current.value;
     }
 
     setIsLoading(true);
     setAuthStateDispatches.onAuth({
-      enteredEmail,
-      enteredAge,
-      enteredFullName,
-      enteredPassword
+      email,
+      age,
+      name,
+      password
     }, isLogin)
   };
 
-  // Handle req error message
+  // Handle Errors from props
   useEffect(() => {
     if (error) {
       setIsLoading(false)
       setErrorMessage(error)
     }
-  }, [error])
+
+    if (isAuthenticated) setAuthStateDispatches.onSetAuthRedirectPath('/movies')
+  }, [error, isAuthenticated])
 
   const signUpFields = !isLogin ? (
     <>
