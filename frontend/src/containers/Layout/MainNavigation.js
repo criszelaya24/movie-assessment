@@ -5,7 +5,7 @@ import classes from './MainNavigation.module.css';
 
 const MainNavigation = () => {
 
-  const [ authState, setAuthStateDispatches ] = useAuth();
+  const { authState, setAuthStateDispatches } = useAuth();
 
   const navigationItems = (
     <nav>
