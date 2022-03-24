@@ -1,14 +1,14 @@
 import { Link } from 'react-router-dom';
 
-import { auth } from '../../store/services'
+import { useAuth } from '../../store/hooks-store'
 import classes from './MainNavigation.module.css';
 
-const MainNavigation = (props) => {
+const MainNavigation = () => {
 
-  const { isAuthenticated } = props;
+  const { authState, setAuthDispatches } = useAuth();
 
   const logoutHandler = () => {
-    props.onLogout();
+    setAuthDispatches.onLogout();
     // optional: redirect the user
   };
 
@@ -19,17 +19,17 @@ const MainNavigation = (props) => {
       </Link>
       <nav>
         <ul>
-          {!isAuthenticated && (
+          {!authState?.isAuthenticated && (
             <li>
               <Link to='/auth'>Login</Link>
             </li>
           )}
-          {isAuthenticated && (
+          {authState?.isAuthenticated && (
             <li>
               <Link to='/profile'>Profile</Link>
             </li>
           )}
-          {isAuthenticated && (
+          {authState?.isAuthenticated && (
             <li>
               <button onClick={logoutHandler}>Logout</button>
             </li>
@@ -40,4 +40,4 @@ const MainNavigation = (props) => {
   );
 };
 
-export default auth(MainNavigation);
+export default MainNavigation;

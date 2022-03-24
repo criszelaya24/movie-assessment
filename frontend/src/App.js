@@ -1,11 +1,13 @@
-import { auth } from './store/services/index';
+import { useAuth } from './store/hooks-store/useAuth'
 import Layout from './components/Layout/Layout';
 import { Switch, Route, Redirect } from 'react-router-dom';
 // import UserProfile from './components/Profile/UserProfile';
 // import AuthPage from './pages/AuthPage';
 import HomePage from './pages/HomePage';
 
-function App(props) {
+function App() {
+  const [ authState, setAuthDispatches ]  = useAuth();
+  console.log({ authState, setAuthDispatches });
   return (
     <Layout>
       <Switch>
@@ -20,4 +22,4 @@ function App(props) {
   );
 }
 
-export default auth(App);
+export default App;
