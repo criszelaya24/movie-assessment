@@ -1,4 +1,6 @@
-import * as actionsTypes from "./actionsTypes";
+import * as actionsTypes from './actionsTypes';
+import * as routes from '../../routes'
+import axios from '../../axios';
 
 // import axios from '../../axios-orders';
 
@@ -56,11 +58,18 @@ export const setAuthRedirectPath = (path) => {
 }
 
 
-export const auth = (email, password, isSignup) => {
+export const auth = (authValues, isLogin) => {
     return dispatch => {
         dispatch(authStart());
+        const path = isLogin ? routes.auth.login : routes.auth.register
 
-        dispatch(authSucess('response.data.idToken', 'response.data.localId'));
+        setTimeout(async () => {
+
+            // dispatch(authFail('Testing Error Modal'))
+        }, 1000)
+
+
+        // dispatch(authSucess('response.data.idToken', 'response.data.localId'));
     };
 };
 

@@ -1,19 +1,22 @@
-import { useAuth } from './store/hooks-store/useAuth'
-import Layout from './components/Layout/Layout';
+import { useAuth } from './store/hooks-store'
+import Layout from './containers/Layout/Layout';
 import { Switch, Route, Redirect } from 'react-router-dom';
-// import UserProfile from './components/Profile/UserProfile';
-// import AuthPage from './pages/AuthPage';
+import AuthPage from './pages/AuthPage';
 import HomePage from './pages/HomePage';
 
 function App() {
-  const [ authState, setAuthDispatches ]  = useAuth();
-  console.log({ authState, setAuthDispatches });
+  const { authState }  = useAuth();
   return (
     <Layout>
       <Switch>
         <Route path='/' exact>
           <HomePage />
         </Route>
+        {!authState.isAuthenticated && (
+          <Route path='/auth'>
+            <AuthPage />
+          </Route>
+        )}
         <Route path='*'>
           <Redirect to='/' />
         </Route>

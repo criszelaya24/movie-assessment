@@ -1,17 +1,21 @@
-import { useState, useRef } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useState, useRef, useEffect } from 'react';
 import { useAuth } from '../../store/hooks-store';
+import Spinner from '../../components/UI/Spinner/Spinner';
+import Modal from '../../components/UI/Modal/Modal';
 import classes from './AuthForm.module.css';
 
 const AuthForm = () => {
-  const history = useHistory();
   const emailInputRef = useRef();
+  const fullNameInputRef = useRef();
   const passwordInputRef = useRef();
+  const ageInputRef = useRef();
 
-  const [ authState, setAuthStateDispatches ] = useAuth();
+  const { authState, setAuthStateDispatches } = useAuth();
+  const [ errorMessage, setErrorMessage ] = useState("")
 
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const { error } = authState
 
   const switchAuthModeHandler = () => {
     setIsLogin((prevState) => !prevState);
@@ -20,90 +24,84 @@ const AuthForm = () => {
   const submitHandler = (event) => {
     event.preventDefault();
 
+    // TODO: Add validation with yup (https://www.npmjs.com/package/yup)
+    let enteredFullName;
+    let enteredAge;
     const enteredEmail = emailInputRef.current.value;
     const enteredPassword = passwordInputRef.current.value;
-
-    // optional: Add validation
+    if (!isLogin) {
+      enteredFullName = fullNameInputRef.current.value;
+      enteredAge = ageInputRef.current.value;
+    }
 
     setIsLoading(true);
-    let url;
-    if (isLogin) {
-      url =
-        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBZhsabDexE9BhcJbGxnZ4DiRlrCN9xe24';
-    } else {
-      url =
-        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBZhsabDexE9BhcJbGxnZ4DiRlrCN9xe24';
-    }
-    fetch(url, {
-      method: 'POST',
-      body: JSON.stringify({
-        email: enteredEmail,
-        password: enteredPassword,
-        returnSecureToken: true,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((res) => {
-        setIsLoading(false);
-        if (res.ok) {
-          return res.json();
-        } else {
-          return res.json().then((data) => {
-            let errorMessage = 'Authentication failed!';
-            // if (data && data.error && data.error.message) {
-            //   errorMessage = data.error.message;
-            // }
-
-            throw new Error(errorMessage);
-          });
-        }
-      })
-      .then((data) => {
-        const expirationTime = new Date(
-          new Date().getTime() + +data.expiresIn * 1000
-        );
-        setAuthStateDispatches.onAutoLogin(data.idToken, expirationTime.toISOString());
-        history.replace('/');
-      })
-      .catch((err) => {
-        alert(err.message);
-      });
+    setAuthStateDispatches.onAuth({
+      enteredEmail,
+      enteredAge,
+      enteredFullName,
+      enteredPassword
+    }, isLogin)
   };
 
+  // Handle req error message
+  useEffect(() => {
+    if (error) {
+      setIsLoading(false)
+      setErrorMessage(error)
+    }
+  }, [error])
+
+  const signUpFields = !isLogin ? (
+    <>
+      <div className={classes.control}>
+            <label htmlFor='email'>Your Full Name</label>
+            <input type='text' id='fullName' required ref={fullNameInputRef} />
+      </div>
+      <div className={classes.control}>
+            <label htmlFor='email'>Your Age (optional)</label>
+            <input type='number' id='age' ref={ageInputRef} />
+      </div>
+    </>
+  ) : null;
+
   return (
-    <section className={classes.auth}>
-      <h1>{isLogin ? 'Login' : 'Sign Up'}</h1>
-      <form onSubmit={submitHandler}>
-        <div className={classes.control}>
-          <label htmlFor='email'>Your Email</label>
-          <input type='email' id='email' required ref={emailInputRef} />
-        </div>
-        <div className={classes.control}>
-          <label htmlFor='password'>Your Password</label>
-          <input
-            type='password'
-            id='password'
-            required
-            ref={passwordInputRef}
-          />
-        </div>
-        <div className={classes.actions}>
-          {!isLoading && (
-            <button>{isLogin ? 'Login' : 'Create Account'}</button>
-          )}
-          {isLoading && <p>Sending request...</p>}
-          <button
-            type='button'
-            className={classes.toggle}
-            onClick={switchAuthModeHandler}
-          >
-            {isLogin ? 'Create new account' : 'Login with existing account'}
-          </button>
-        </div>
-      </form>
-    </section>
+    <>
+      <Modal show={errorMessage} modalClosed={ () => setErrorMessage(null)}>
+        <h1>{errorMessage}</h1>
+      </Modal>
+      <section className={classes.auth}>
+        <h1>{isLogin ? 'Login' : 'Sign Up'}</h1>
+        <form onSubmit={submitHandler}>
+          { signUpFields }
+          <div className={classes.control}>
+            <label htmlFor='email'>Your Email</label>
+            <input type='email' id='email' required ref={emailInputRef} />
+          </div>
+          <div className={classes.control}>
+            <label htmlFor='password'>Your Password</label>
+            <input
+              type='password'
+              id='password'
+              required
+              ref={passwordInputRef}
+            />
+          </div>
+          <div className={classes.actions}>
+            {!isLoading && (
+              <button>{isLogin ? 'Login' : 'Create Account'}</button>
+            )}
+            {isLoading && <Spinner/>}
+            <button
+              type='button'
+              className={classes.toggle}
+              onClick={switchAuthModeHandler}
+            >
+              {isLogin ? 'Create new account' : 'Login with existing account'}
+            </button>
+          </div>
+        </form>
+      </section>
+    </>
   );
 };
 

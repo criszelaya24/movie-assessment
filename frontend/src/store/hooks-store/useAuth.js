@@ -5,8 +5,8 @@ export const useAuth = () => {
     const authStateReducer = useSelector(state => state.authReducer)
     const [authState, setAuthState] = useState({});
     const dispatch = useDispatch();
-    const setAuthDispatches = {
-        onAuth: (email, password, isSignup) => dispatch(actions.auth(email, password, isSignup)),
+    const setAuthStateDispatches = {
+        onAuth: (authValues, isLogin) => dispatch(actions.auth(authValues, isLogin)),
         onSetAuthRedirectPath: (path) => dispatch(actions.setAuthRedirectPath(path)),
         onLogout: () => dispatch(actions.logout()),
         onAutoLogin: () => dispatch (actions.authCheckState()),
@@ -18,5 +18,5 @@ export const useAuth = () => {
             isAuthenticated: authStateReducer.token !== null})
     }, [ authStateReducer ])
 
-    return [ authState, setAuthDispatches ]
+    return { authState, setAuthStateDispatches }
 }
