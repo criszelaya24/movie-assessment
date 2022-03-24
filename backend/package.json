@@ -30,6 +30,7 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.1",
     "cookie-session": "^2.0.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "express": "^4.17.2",
     "i": "^0.3.7",
@@ -47,10 +48,11 @@
     "node": "14.x"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.12",
     "@typescript-eslint/eslint-plugin": "^5.10.1",
     "@typescript-eslint/parser": "^5.10.2",
     "concurrently": "^6.3.0",
-    "typescript": "^4.4.3",
-    "eslint-config-lint": "git+https://github.com/criszelaya24/eslint-config"
+    "eslint-config-lint": "git+https://github.com/criszelaya24/eslint-config",
+    "typescript": "^4.4.3"
   }
 }

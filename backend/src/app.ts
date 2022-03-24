@@ -4,9 +4,11 @@ import './controllers/RootController';
 import './controllers/UserController';
 import './controllers/MovieController';
 import cookieSession from 'cookie-session';
+import cors from 'cors';
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 app.use(cookieSession({ keys: [ 'expressType' ] }));
 app.use(AppRouter.getInstance());
 
