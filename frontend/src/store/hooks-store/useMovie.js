@@ -7,8 +7,11 @@ export const useMovie = () => {
     const [movieState, setMovieState] = useState({});
     const dispatch = useDispatch();
     const setMovieStateDispatches = {
+        // Need to paginate
         getMovies: (options = {}) => dispatch(actions.getMovies(options)),
-        addFavoriteMovie: (id) => dispatch(actions.addFavoriteMovie(id))
+        addFavoriteMovie: (id) => dispatch(actions.addFavoriteMovie(id)),
+        removeFavoriteMovie: (id) => dispatch(actions.onRemoveFavoriteMovie(id)),
+        getFavMovies: () => dispatch(actions.getFavMovies())
     }
 
     useEffect(() => {

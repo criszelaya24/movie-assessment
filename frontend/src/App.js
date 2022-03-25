@@ -5,7 +5,8 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import Layout from './containers/Layout/Layout';
 import AuthPage from './pages/AuthPage';
 import HomePage from './pages/HomePage';
-import Movies from './containers/Movies/Movies';
+import MoviesPage from './pages/MoviesPage';
+import FavoriteMoviesPages from './pages/FavoriteMoviesPage';
 
 function App() {
   const history = useHistory();
@@ -40,10 +41,10 @@ function App() {
       <HomePage />
     </Route>
     <Route path='/movies'>
-      <Movies/>
+      <MoviesPage/>
     </Route>
     <Route path="/favorites">
-      <HomePage/>
+      <FavoriteMoviesPages/>
     </Route>
     <Route path='*'>
       <Redirect to='/' />

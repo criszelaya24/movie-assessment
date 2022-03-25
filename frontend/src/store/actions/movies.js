@@ -91,15 +91,111 @@ export const addFavoriteMovie = (id) => {
             const user = JSON.parse(localStorage.getItem('user'));
             user.favoritesMovies = ([ ...new Set([ ...user.favoritesMovies, id ])])
             localStorage.setItem('user', JSON.stringify(user));
-            console.log({ user })
             dispatch(updateUser(user))
-            dispatch(saveFavoriteMovie(id))
             dispatch(addFavoriteMovieEnd())
         })
         .catch(error => {
             let errorData = error.response.data.error
             dispatch(addFavoriteMovieFailed(errorData))
             dispatch(moviesRetrieveEnd())
+        })
+    }
+}
+
+export const removeFavoriteMovieStart = () => {
+    return {
+        type: actionsTypes.MOVIES_REMOVE_FAVORITE_START
+    }
+}
+
+export const removeFavoriteMovieEnd = () => {
+    return {
+        type: actionsTypes.MOVIES_REMOVE_FAVORITE_END
+    }
+}
+
+export const removeFavoriteMovie = (id) => {
+    return {
+        type: actionsTypes.MOVIES_REMOVE_FAVORITE_SUCCESS,
+        id
+    }
+}
+
+export const removeFavoriteMovieFailed = (error) => {
+    return {
+        type: actionsTypes.MOVIES_REMOVE_FAVORITE_FAILED,
+        error
+    }
+}
+
+export const onRemoveFavoriteMovie = (id) => {
+    return (dispatch, getState) => {
+        const token = getState()?.authReducer?.token
+        dispatch(addFavoriteMovieStart())
+        const path = routes.movies.removeFavorite;
+        axios.defaults.headers.common = {
+            'Authorization': 'Bearer ' + token
+        };
+        axios.delete(`${path}/${id}`, )
+        .then(res => {
+            const user = JSON.parse(localStorage.getItem('user'));
+            user.favoritesMovies = user.favoritesMovies.filter(movie => movie !== id)
+            localStorage.setItem('user', JSON.stringify(user));
+            dispatch(updateUser(user))
+            dispatch(addFavoriteMovieEnd())
+        })
+        .catch(error => {
+            let errorData = error.response.data.error
+            dispatch(addFavoriteMovieFailed(errorData))
+            dispatch(moviesRetrieveEnd())
+        })
+    }
+}
+
+export const favMoviesRetrieveStart = () => {
+    return {
+        type: actionsTypes.FAV_MOVIES_RETRIEVE_START
+    };
+};
+
+export const favMoviesRetrieveSuccess = (moviesFavorite) => {
+    return {
+        type: actionsTypes.FAV_MOVIES_RETRIEVE_SUCCESS,
+        moviesFavorite
+    };
+};
+
+export const favMoviesRetrieveFail = (error) => {
+    return {
+        type: actionsTypes.FAV_MOVIES_RETRIEVE_FAILED,
+        error: error
+    };
+};
+
+export const favMoviesRetrieveEnd = () => {
+    return {
+        type: actionsTypes.FAV_MOVIES_RETRIEVE_END
+    };
+};
+
+export const getFavMovies = () => {
+    return (dispatch, getState) => {
+        const token = getState()?.authReducer?.token
+        dispatch(moviesRetrieveStart())
+        const path = routes.movies.getFavorites;
+        axios.defaults.headers.common = {
+            'Authorization': 'Bearer ' + token
+        };
+        axios.get(path)
+        .then(res => {
+            const { results = []} = res?.data?.data
+            dispatch(favMoviesRetrieveSuccess(results))
+            dispatch(favMoviesRetrieveEnd())
+        })
+        .catch(error => {
+            let errorData = error.response.data.error
+            dispatch(favMoviesRetrieveFail(errorData))
+            dispatch(favMoviesRetrieveEnd())
         })
     }
 }

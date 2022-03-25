@@ -5,5 +5,7 @@ export const auth = {
 
 export const movies = {
     nowReleased: '/movies/now-released',
-    saveFavorite: '/movies/favorites'
+    saveFavorite: '/movies/favorites',
+    removeFavorite: '/movies/favorites',
+    getFavorites: 'movies/favorites'
 }

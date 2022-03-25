@@ -8,8 +8,14 @@ const MovieItem = React.memo(props => {
   const { setMovieStateDispatches } = useMovie();
 
   const toggleFavHandler = () => {
+    console.log('FAVORITE')
     if (!props.isFav) setMovieStateDispatches.addFavoriteMovie(props.id);
   };
+
+  const toggleUnFavHandler = () => {
+    console.log('UNFAVORTE')
+    if (props.isFav) setMovieStateDispatches.removeFavoriteMovie(props.id);
+  }
 
   return (
     <Card style={{ marginBottom: '1rem' }}>
@@ -18,7 +24,7 @@ const MovieItem = React.memo(props => {
         <p>{props.description}</p>
         <button
           className={!props.isFav ? 'button-outline' : ''}
-          onClick={toggleFavHandler}
+          onClick={!props.isFav ? toggleFavHandler : toggleUnFavHandler}
         >
           {props.isFav ? 'Un-Favorite' : 'Favorite'}
         </button>

@@ -4,7 +4,6 @@ import axios from '../../axios';
 const tokenDuration = Number(process.env.REACT_APP_TOKEN_DURATION) || 288000000
 
 export const updateUser = (user) => {
-    console.log( { user2: user })
     return {
         type: actionsTypes.UPDATE_USER  ,
         user

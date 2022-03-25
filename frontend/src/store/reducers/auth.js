@@ -40,7 +40,6 @@ const reducer = (state = initialState, action) => {
                 user: undefined,
             }
         case actionsTypes.UPDATE_USER:
-            console.log({ action: action.user})
             return {
                 ...state,
                 user: action.user

@@ -8,5 +8,7 @@ export {
 
 export {
     getMovies,
-    addFavoriteMovie
+    addFavoriteMovie,
+    onRemoveFavoriteMovie,
+    getFavMovies
 } from './movies'
