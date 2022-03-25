@@ -12,5 +12,9 @@ Made with ❤️
 
 ### Cristopher Palacios / Managua - Nicaragua
 
+## Live URL
+    https://moviedbapp-hired-front.herokuapp.com
+
 ## Setup
     Inside of each folder will find a README section with instruction to local instalation and it's own use.
+
