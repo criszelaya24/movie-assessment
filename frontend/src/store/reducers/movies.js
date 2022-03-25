@@ -34,7 +34,6 @@ const reducer = (state = initialState, action) => {
         case actionsTypes.MOVIES_RETRIEVE_END:
             return {
                 ...state,
-                error: null,
                 retrieving: false
             };
 

@@ -41,12 +41,12 @@ export const getMovies = ({ page = 1}) => {
         })
         .then(res => {
             const { results = []} = res?.data?.data
-            console.log({ results })
             dispatch(moviesRetrieveSuccess(results))
             dispatch(moviesRetrieveEnd())
         })
         .catch(error => {
-            dispatch(moviesRetrieveFail(error.message))
+            let errorData = error.response.data.error
+            dispatch(moviesRetrieveFail(errorData))
             dispatch(moviesRetrieveEnd())
         })
     }

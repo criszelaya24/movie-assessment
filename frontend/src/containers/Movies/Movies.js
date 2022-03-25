@@ -10,7 +10,8 @@ import { useMovie } from "../../store/hooks-store";
 const Movies = () => {
   const { movieState, setMovieStateDispatches } = useMovie();
   const [ isLoading, setIsLoading ] = useState(true);
-  const { retrieving = true, movies = [] } = movieState
+  const [ errorMessage, setErrorMessage ] = useState('');
+  const { retrieving = true, movies = [], error } = movieState
 
   useEffect(() => {
       setMovieStateDispatches?.getMovies()
@@ -20,17 +21,27 @@ const Movies = () => {
     if (!retrieving && movies.length > 0) setIsLoading(false)
   }, [ retrieving, movies ])
 
+  useEffect(() => {
+    if (error && !retrieving) {
+      setErrorMessage(error)
+      setIsLoading(false)
+    };
+  }, [ error, retrieving] )
+
   const spinner = isLoading ? <Spinner/> : null
   const moviesToRender = movies.map(movie => (
     <MovieItem key={movie.id}
                 id={movie.id}
                 title={movie.title}
                 description={movie.overview}
-                isFav={false}/>
+                isFav={true}/>
     ))
 
   return (
     <>
+      <Modal show={errorMessage} modalClosed={ () => setErrorMessage(null)}>
+        <h1>{errorMessage}</h1>
+      </Modal>
       { spinner }
       <ul className={classes.moviesList}>
       { moviesToRender }
