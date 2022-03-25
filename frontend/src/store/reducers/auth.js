@@ -39,6 +39,12 @@ const reducer = (state = initialState, action) => {
                 token: null,
                 user: undefined,
             }
+        case actionsTypes.UPDATE_USER:
+            console.log({ action: action.user})
+            return {
+                ...state,
+                user: action.user
+            };
         /* redirecting the user to the checkout page */
         case actionsTypes.SET_AUTH_REDIRECT_PATH:
             return {

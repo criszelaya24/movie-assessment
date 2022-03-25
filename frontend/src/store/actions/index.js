@@ -2,10 +2,11 @@ export {
     auth,
     logout,
     setAuthRedirectPath,
-    authCheckState
-
+    authCheckState,
+    updateUser
 } from './auth'
 
 export {
-    getMovies
+    getMovies,
+    addFavoriteMovie
 } from './movies'

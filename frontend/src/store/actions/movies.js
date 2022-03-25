@@ -1,6 +1,7 @@
 import * as actionsTypes from './actionsTypes';
 import * as routes from '../../routes'
 import axios from '../../axios';
+import { updateUser } from './index'
 
 export const moviesRetrieveStart = () => {
     return {
@@ -47,6 +48,57 @@ export const getMovies = ({ page = 1}) => {
         .catch(error => {
             let errorData = error.response.data.error
             dispatch(moviesRetrieveFail(errorData))
+            dispatch(moviesRetrieveEnd())
+        })
+    }
+}
+
+export const addFavoriteMovieStart = () => {
+    return {
+        type: actionsTypes.MOVIES_SET_FAVORITE_START
+    }
+}
+
+export const addFavoriteMovieEnd = () => {
+    return {
+        type: actionsTypes.MOVIES_SET_FAVORITE_END
+    }
+}
+
+export const saveFavoriteMovie = (id) => {
+    return {
+        type: actionsTypes.MOVIES_SET_FAVORITE_SUCCESS,
+        id
+    }
+}
+
+export const addFavoriteMovieFailed = (error) => {
+    return {
+        type: actionsTypes.MOVIES_SET_FAVORITE_FAILED,
+        error
+    }
+}
+export const addFavoriteMovie = (id) => {
+    return (dispatch, getState) => {
+        const token = getState()?.authReducer?.token
+        dispatch(addFavoriteMovieStart())
+        const path = routes.movies.saveFavorite;
+        axios.defaults.headers.common = {
+            'Authorization': 'Bearer ' + token
+        };
+        axios.post(path, { id })
+        .then(res => {
+            const user = JSON.parse(localStorage.getItem('user'));
+            user.favoritesMovies = ([ ...new Set([ ...user.favoritesMovies, id ])])
+            localStorage.setItem('user', JSON.stringify(user));
+            console.log({ user })
+            dispatch(updateUser(user))
+            dispatch(saveFavoriteMovie(id))
+            dispatch(addFavoriteMovieEnd())
+        })
+        .catch(error => {
+            let errorData = error.response.data.error
+            dispatch(addFavoriteMovieFailed(errorData))
             dispatch(moviesRetrieveEnd())
         })
     }

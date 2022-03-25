@@ -2,16 +2,14 @@ import React from 'react';
 
 import Card from '../Card/Card';
 import classes from './MovieItem.module.css';
+import { useMovie } from '../../../store/hooks-store';
 
 const MovieItem = React.memo(props => {
-  // const dispatch = useStore(false)[1];
+  const { setMovieStateDispatches } = useMovie();
 
-  // const toggleFavHandler = () => {
-  //   // toggleFav(props.id);
-  //   dispatch('TOGGLE_FAV', props.id);
-  // };
-
-  console.log( { props })
+  const toggleFavHandler = () => {
+    if (!props.isFav) setMovieStateDispatches.addFavoriteMovie(props.id);
+  };
 
   return (
     <Card style={{ marginBottom: '1rem' }}>
@@ -20,7 +18,7 @@ const MovieItem = React.memo(props => {
         <p>{props.description}</p>
         <button
           className={!props.isFav ? 'button-outline' : ''}
-          onClick={() => console.log('setFavorite')}
+          onClick={toggleFavHandler}
         >
           {props.isFav ? 'Un-Favorite' : 'Favorite'}
         </button>

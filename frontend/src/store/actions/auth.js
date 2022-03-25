@@ -3,8 +3,14 @@ import * as routes from '../../routes'
 import axios from '../../axios';
 const tokenDuration = Number(process.env.REACT_APP_TOKEN_DURATION) || 288000000
 
-// import axios from '../../axios-orders';
+export const updateUser = (user) => {
+    console.log( { user2: user })
+    return {
+        type: actionsTypes.UPDATE_USER  ,
+        user
+    };
 
+};
 export const authStart = () => {
     return {
         type: actionsTypes.AUTH_START

@@ -8,6 +8,7 @@ export const useMovie = () => {
     const dispatch = useDispatch();
     const setMovieStateDispatches = {
         getMovies: (options = {}) => dispatch(actions.getMovies(options)),
+        addFavoriteMovie: (id) => dispatch(actions.addFavoriteMovie(id))
     }
 
     useEffect(() => {
