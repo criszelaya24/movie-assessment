@@ -5,3 +5,7 @@ export {
     authCheckState
 
 } from './auth'
+
+export {
+    getMovies
+} from './movies'

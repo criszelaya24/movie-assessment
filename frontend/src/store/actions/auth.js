@@ -1,7 +1,7 @@
 import * as actionsTypes from './actionsTypes';
 import * as routes from '../../routes'
 import axios from '../../axios';
-const tokenDuration = Number(process.env.REACT_APP_TOKEN_DURATION) || 2880000
+const tokenDuration = Number(process.env.REACT_APP_TOKEN_DURATION) || 288000000
 
 // import axios from '../../axios-orders';
 
@@ -73,7 +73,7 @@ export const auth = (authValues, isLogin) => {
                 localStorage.setItem('expirationDate', expirationDate);
                 localStorage.setItem('userId', userId);
                 dispatch(authSuccess(token, userId));
-                // dispatch(checkAuthTimeout(tokenDuration));
+                dispatch(checkAuthTimeout(tokenDuration));
             })
             .catch(error => {
                 const errors = [];
