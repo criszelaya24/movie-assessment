@@ -1,0 +1,7 @@
+import AuthForm from '../containers/Auth/AuthForm';
+
+const AuthPage = () => {
+  return <AuthForm />;
+};
+
+export default AuthPage;
