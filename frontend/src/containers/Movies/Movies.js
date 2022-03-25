@@ -5,13 +5,16 @@ import classes from './Movies.module.css';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Modal from '../../components/UI/Modal/Modal';
 import { useEffect, useState } from "react";
-import { useMovie } from "../../store/hooks-store";
+import { useMovie, useAuth } from "../../store/hooks-store";
+import { auth } from '../../routes';
 
 const Movies = () => {
-  const { movieState, setMovieStateDispatches } = useMovie();
+  const { movieState = {}, setMovieStateDispatches } = useMovie();
+  const { authState = {} } = useAuth()
   const [ isLoading, setIsLoading ] = useState(true);
   const [ errorMessage, setErrorMessage ] = useState('');
   const { retrieving = true, movies = [], error } = movieState
+  const { user } = authState
 
   useEffect(() => {
       setMovieStateDispatches?.getMovies()
@@ -28,13 +31,19 @@ const Movies = () => {
     };
   }, [ error, retrieving] )
 
+  const checkFavoriteMovie = (id) => {
+    if (!user) return false
+
+    return user.favoritesMovies.filter(movie => movie === id).length > 0
+  }
+
   const spinner = isLoading ? <Spinner/> : null
   const moviesToRender = movies.map(movie => (
     <MovieItem key={movie.id}
                 id={movie.id}
                 title={movie.title}
                 description={movie.overview}
-                isFav={true}/>
+                isFav={checkFavoriteMovie(movie.id)}/>
     ))
 
   return (

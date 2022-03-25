@@ -12,11 +12,11 @@ export const authStart = () => {
     };
 };
 
-export const authSuccess = (token, userId) => {
+export const authSuccess = (token, user) => {
     return {
         type: actionsTypes.AUTH_SUCCESS,
         idToken: token,
-        userId
+        user
     };
 
 };
@@ -68,11 +68,11 @@ export const auth = (authValues, isLogin) => {
             .then(response => {
                 const expirationDate = new Date(new Date().getTime() +  tokenDuration)
                 const token = response.data.token
-                const userId = response.data.user._id
+                const user = response.data.user;
                 localStorage.setItem('token', token);
                 localStorage.setItem('expirationDate', expirationDate);
-                localStorage.setItem('userId', userId);
-                dispatch(authSuccess(token, userId));
+                localStorage.setItem('user', JSON.stringify(user));
+                dispatch(authSuccess(token, user));
                 dispatch(checkAuthTimeout(tokenDuration));
             })
             .catch(error => {
@@ -100,8 +100,8 @@ export const authCheckState = () => {
             if (expirationDate <= new Date()) {
                 dispatch(logout())
             } else {
-                const userId = localStorage.getItem('userId');
-                dispatch(authSuccess(token, userId));
+                const user = localStorage.getItem('user');
+                dispatch(authSuccess(token, JSON.parse(user)));
                 dispatch(checkAuthTimeout(expirationDate.getTime() - new Date().getTime()));  
 
             }   

@@ -3,7 +3,7 @@ import * as actionsTypes from '../actions/actionsTypes';
 
 const initialState = {
     token: null,
-    userId: null,
+    user: undefined,
     error: null,
     /* redirecting the user to the checkout page */
     authRedirectPath: ''
@@ -24,7 +24,7 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 token: action.idToken,
-                userId: action.userId,
+                user: action.user,
                 error: null,
 
             };
@@ -37,7 +37,7 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 token: null,
-                userId: null
+                user: undefined,
             }
         /* redirecting the user to the checkout page */
         case actionsTypes.SET_AUTH_REDIRECT_PATH:
