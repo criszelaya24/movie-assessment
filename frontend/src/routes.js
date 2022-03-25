@@ -7,5 +7,5 @@ export const movies = {
     nowReleased: '/movies/now-released',
     saveFavorite: '/movies/favorites',
     removeFavorite: '/movies/favorites',
-    getFavorites: 'movies/favorites'
+    getFavorites: '/movies/favorites'
 }
