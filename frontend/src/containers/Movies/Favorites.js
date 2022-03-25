@@ -25,8 +25,6 @@ const Favorites = props => {
       setErrorMessage(error)
       setIsLoading(false)
     };
-
-    if (!retrieving) setMovieStateDispatches?.getFavMovies();
   }, [ retrieving, favoritesMovies, error ])
 
   let content = null;

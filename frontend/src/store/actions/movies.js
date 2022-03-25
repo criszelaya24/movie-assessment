@@ -143,6 +143,7 @@ export const onRemoveFavoriteMovie = (id) => {
             localStorage.setItem('user', JSON.stringify(user));
             dispatch(updateUser(user))
             dispatch(addFavoriteMovieEnd())
+            dispatch(getFavMovies())
         })
         .catch(error => {
             let errorData = error.response.data.error
