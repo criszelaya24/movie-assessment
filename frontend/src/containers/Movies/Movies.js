@@ -1,25 +1,40 @@
 // import React, { useContext } from 'react';
 
-// import ProductItem from '../components/Products/ProductItem';
-// import { useStore } from '../hooks-store/store';
-// import './Products.css';
+import MovieItem from '../../components/UI/Movies/MovieItem';
+import classes from './Movies.module.css';
+import Spinner from '../../components/UI/Spinner/Spinner';
+import Modal from '../../components/UI/Modal/Modal';
+import { useEffect, useState } from "react";
+import { useMovie } from "../../store/hooks-store";
 
-const Movies = props => {
-  // const state = useStore()[0];
+const Movies = () => {
+  const { movieState, setMovieStateDispatches } = useMovie();
+  const [ isLoading, setIsLoading ] = useState(true);
+  const { retrieving = true, movies = [] } = movieState
+
+  useEffect(() => {
+      setMovieStateDispatches?.getMovies()
+  }, []);
+
+  useEffect(() => {
+    if (!retrieving && movies.length > 0) setIsLoading(false)
+  }, [ retrieving, movies ])
+
+  const spinner = isLoading ? <Spinner/> : null
+  const moviesToRender = movies.map(movie => (
+    <MovieItem key={movie.id}
+                id={movie.id}
+                title={movie.title}
+                description={movie.overview}
+                isFav={false}/>
+    ))
+
   return (
-    // <ul className="products-list">
-    //   {state.products.map(prod => (
-    //     <ProductItem
-    //       key={prod.id}
-    //       id={prod.id}
-    //       title={prod.title}
-    //       description={prod.description}
-    //       isFav={prod.isFavorite}
-    //     />
-    //   ))}
-    // </ul>
     <>
-     <h1>MOVIES LIST</h1>
+      { spinner }
+      <ul className={classes.moviesList}>
+      { moviesToRender }
+    </ul>
     </>
   );
 };
