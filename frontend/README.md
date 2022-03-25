@@ -1,70 +1,56 @@
-# Getting Started with Create React App
+# MovieDB Assesment
+    Frontend from movie-assessment, The goal is to connect to a movie API and return all the details related to Users location.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Backend live URL
+    https://moviedbapp-hired-backend.herokuapp.com
+**To connect you will need a valid token.** 🧨
 
-## Available Scripts
+# Run Locally
+If you want to setup locally this server, you need the following.
 
-In the project directory, you can run:
+    - Nodejs
+    - npm
 
-### `npm start`
+Fill out the .env.example and rename it to .env then, start the server, run from the terminal:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+    - npm run install
+    - npm run start
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+# User stories
+```
+As a guest user,
+So I can list all recently streamed movies,
+I would like to be able get register
 
-### `npm test`
+As a valid user,
+So I can list all recently streamed movies,
+I would like to be able login
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+As a valid user,
+So I can list all recently streamed movies,
+I would like to be able auto-login
 
-### `npm run build`
+As a valid user,
+So I can have secure my account,
+I would like to be able logout.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+As a valid user,
+So I can have secure my account,
+I would like to be able auto-logout.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+As a valid user,
+So I can check all the recent movies from my country,
+I would like to be able to list recent streamed movies.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+As a valid user,
+So I can have a list of favorite movies,
+I would like to be able to save a movie.
 
-### `npm run eject`
+As a valid user,
+So I can check a list of favorite movies,
+I would like to be able to list them.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+As a valid user,
+So I can have control of favorite movies,
+I would like to be able to delete a movie from favorite.
+```
