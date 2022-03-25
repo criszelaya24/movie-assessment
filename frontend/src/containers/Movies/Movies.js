@@ -41,6 +41,7 @@ const Movies = () => {
   const moviesToRender = movies.map(movie => (
     <MovieItem key={movie.id}
                 id={movie.id}
+                date={movie.release_date}
                 title={movie.title}
                 description={movie.overview}
                 isFav={checkFavoriteMovie(movie.id)}/>

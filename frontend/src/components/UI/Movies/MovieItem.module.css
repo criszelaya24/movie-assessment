@@ -3,6 +3,11 @@
   margin: 0.25rem 0;
 }
 
+.movieItem .header {
+  display: flex;
+  justify-content: space-between;
+}
+
 .movieItem h2.isFav {
   color: #ff2058;
 }

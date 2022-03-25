@@ -45,6 +45,7 @@ const Favorites = props => {
           <MovieItem key={movie.id}
           id={movie.id}
           title={movie.title}
+          date={movie.release_date}
           description={movie.overview}
           isFav={true}/>
         ))}
